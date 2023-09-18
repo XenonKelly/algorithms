@@ -17,7 +17,7 @@ int main()
         cin >> arr[i];
     }
 
-    selection_sort(arr, size);
+    array_sort(arr, size);
 
     cout << "Sorted array: ";
 

@@ -1,3 +1,3 @@
 #pragma once
 
-void selection_sort(int m[], int size);
+void array_sort(int m[], int size);

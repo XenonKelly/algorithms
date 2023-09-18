@@ -4,18 +4,19 @@
 using namespace std;
 
 
-void selection_sort(int m[], int size) {
-	for (int i = 1; i < size - 1; i++) {
-		for (int j = i + 1; j < size; j++) {
-			if (!(j & 1)) {
-				if (m[i] >= m[j])
-					swap(m[i], m[j]);
-				break;
-			}
-			if (m[i] <= m[j]) {
-				swap(m[i], m[j]);
-			}
-			break;
+void array_sort(int m[], int size) {
+	for (int i = 1; i < size; i++) {
+		int j = i;
+		int x = m[i];
+		while (j > 0 && m[j - 1] > x) {
+			m[j] = m[j - 1];
+			j--;
 		}
+		m[j] = x;
+	}
+
+	for (int i = 1; i < size-1; i+=2) {
+		swap(m[i], m[i+1]);
 	}
 }
+
