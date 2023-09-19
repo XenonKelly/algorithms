@@ -15,8 +15,11 @@ void array_sort(int m[], int size) {
 		m[j] = x;
 	}
 
-	for (int i = 1; i < size-1; i+=2) {
-		swap(m[i], m[i+1]);
+	int i = 1;
+
+	while (i < size - 1) {
+		swap(m[i], m[i + 1]);
+		i += 2;
 	}
 }
 
