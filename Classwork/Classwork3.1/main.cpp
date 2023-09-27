@@ -17,7 +17,7 @@ void shell_pratt_sort(vector<int> &a) {
             s.push_back(pow2);             //заполним сначала массив по степеням двойки
             pow2 = pow2 * 2;
         }
-        pow3 = pow3 * 3;                  //далее если увеличение степени 3 не превзойдет заданного размера, то увеличиваем ее
+        pow3 = pow3 * 3;                  //далее после заполнения по степеням двойки, начинаем увеличивать степень тройки
     }
     sort(s.begin(), s.end()); 
 
@@ -35,13 +35,9 @@ void shell_pratt_sort(vector<int> &a) {
     }
 }
 
-//в 90% случаях +- 0.0017 sec при  /3 и /5 при 10^3; 
-// 0.05 sec при /3, /5 при 10^4;
-// 1.3 sec при /2 и /3, 1.3-1.4 sec при /5 при 10^5;
-//65 sec при /3, 70 sec при /5 при 10^6.
 
 int main() {
-    vector<int> a(10000);
+    vector<int> a(1000);
     mt19937 mt(time(nullptr));
     for (int i = 0; i < a.size(); i++)
         a[i] = (mt() % 100) + 100;
@@ -51,9 +47,29 @@ int main() {
     auto end = chrono::steady_clock::now();
     chrono::duration < double > elapsed_seconds = end - start;
 
+    auto start2 = chrono::steady_clock::now();
+    sort(a.begin(), a.end());
+    auto end2 = chrono::steady_clock::now();
+    chrono::duration < double > elapsed_seconds2 = end2 - start2;
+
     cout << " elapsed time: " << elapsed_seconds.count() << "s\n";
+    cout << " elapsed time: " << elapsed_seconds2.count() << "s\n";
 }
 
+/*
+
+        shell_pratt_sort()        sort()
+
+10^3        0.0017 sec           0.0003 sec
+
+10^4        0.05 sec             0.002 sec
+
+10^5        1.3 sec              0.02 sec
+
+10^6        65 sec               0.16 sec
+
+ - при size/3 и size/5 временные затраты до 10^5 +- одинаковые, при 10^6: 65 sec при size/3, 70 sec при size/5
+*/
   
 
         
