@@ -4,7 +4,6 @@
 #include <random>
 #include <chrono>
 
-
 using namespace std;
 
 void shell_pratt_sort(vector<int> &a) {
@@ -21,23 +20,23 @@ void shell_pratt_sort(vector<int> &a) {
     }
     sort(s.begin(), s.end()); 
 
-
-    for (int gap = s.size(); gap >= 0; gap--) {
-        for (int i = gap; i < a.size(); i++)
-        {
-            int x = a[i];
-            int j = i;
-            for (; j >= gap && a[j - gap] > x; j -= gap) {
-                a[j] = a[j - gap];
+    for (int k = s.size() - 1; k >= 0; k--) {
+        int gap = s[k];
+            for (int i = gap; i < a.size(); i++)
+            {
+                int x = a[i];
+                int j = i;
+                for (; j >= gap && a[j - gap] > x; j -= gap) {
+                    a[j] = a[j - gap];
+                }
+                a[j] = x;
             }
-            a[j] = x;
-        }
     }
 }
 
 
 int main() {
-    vector<int> a(1000);
+    vector<int> a(1000000);
     mt19937 mt(time(nullptr));
     for (int i = 0; i < a.size(); i++)
         a[i] = (mt() % 100) + 100;
@@ -46,7 +45,7 @@ int main() {
     shell_pratt_sort(a);
     auto end = chrono::steady_clock::now();
     chrono::duration < double > elapsed_seconds = end - start;
-
+    
     auto start2 = chrono::steady_clock::now();
     sort(a.begin(), a.end());
     auto end2 = chrono::steady_clock::now();
@@ -64,9 +63,9 @@ int main() {
 
 10^4        0.05 sec             0.002 sec
 
-10^5        1.3 sec              0.02 sec
+10^5        0.3 sec              0.02 sec
 
-10^6        65 sec               0.16 sec
+10^6        4.3 sec               0.16 sec
 
  - при size/3 и size/5 временные затраты до 10^5 +- одинаковые, при 10^6: 65 sec при size/3, 70 sec при size/5
 */
