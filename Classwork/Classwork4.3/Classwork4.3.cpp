@@ -1,8 +1,48 @@
-﻿#include <algorithm>
+﻿#include <iostream>
 #include <vector>
-#include <iostream>
 
 using namespace std;
+
+void merge(vector<int>& a, int b, int m, int e) {
+    vector<int> tmp;
+    int i, j;
+    i = b;
+    j = m + 1;
+
+    while (i <= m && j <= e) {
+        if (a[i] <= a[j]) {
+            tmp.push_back(a[i]);
+            i++;
+        }
+        else {
+            tmp.push_back(a[j]);
+            j++;
+        }
+    }
+
+    while (i <= m) {
+        tmp.push_back(a[i]);
+        i++;
+    }
+
+    while (j <= e) {
+        tmp.push_back(a[j]);
+        j++;
+    }
+
+    for (int i = b; i <= e; i++)
+        a[i] = tmp[i - b];
+}
+
+void merge_sort(vector<int>& a, int b, int e) {
+
+    if (b < e) {
+        int m = (b + e) / 2;
+        merge_sort(a, b, m);
+        merge_sort(a, m + 1, e);
+        merge(a, b, m, e);
+    }
+}
 
 
 int main()
@@ -14,7 +54,6 @@ int main()
     cin >> size;
 
     cout << "Input integers:\n";
-
     vector<int> v;
 
     int i = 0;
@@ -25,46 +64,54 @@ int main()
     }
 
     vector<int> m(v);
-    sort(m.begin(), m.end());
+
+    int s;
+    cout << "Input sum:\n";
+    cin >> s;
+
+    merge_sort(m, 0, size - 1);
 
     vector<pair<int, int>> pairs;
+    int sum;
+    int l = 0;
+    int r = size - 1;
 
-    cout << "Input S:\n";
-    int s;
-    cin >> s;
-    int start = 0;
-    int end = m.size() - 1;
-    while (start < end) {
-        int sum;
-        sum = m[start] + m[end];
+    
+    while (l < r) {
+        int mid = l + (r - l) / 2;
 
+        int sum = m[l] + m[r];
         if (sum == s)
         {
-            std::vector<int>::iterator it_s = std::find(v.begin(), v.end(), m[start]);
-            std::vector<int>::iterator it_e = std::find(v.begin(), v.end(), m[end]);
-            pairs.push_back(make_pair(it_s - v.begin(), it_e - v.begin()));
-
-            start++;
-            end--;
+            int a = (std::find(v.begin(), v.end(), m[l]) - v.begin());
+            int b = (std::find(v.begin(), v.end(), m[r]) - v.begin());
+            pairs.push_back(make_pair(a, b));    
+            r--;
+            l++;
         }
-
-        else if (sum < s)
-            start++;
-        else if (sum > s)
-            end--;
-        
+        else if (sum < s) {
+            l++;
+        }
+        else
+            r--;
     }
 
     if (pairs.size() == 0) {
         cout << "not found";
     }
 
-    for (auto i = 0; i < pairs.size(); ++i) {
-        cout << "{" << pairs.at(i).first << ", "
-            << pairs.at(i).second << "}" << "; ";
+    cout << "Required pairs:\n";
+    for (auto i = 0; i < pairs.size(); i++) {
+        cout << "(" << pairs.at(i).first << ", " << pairs.at(i).second << ")\n";
     }
-    cout << endl;   
+    cout << endl;
 }
+
+
+    
+
+
+
 
 
 
