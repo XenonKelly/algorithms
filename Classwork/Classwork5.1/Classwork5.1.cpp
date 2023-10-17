@@ -35,9 +35,9 @@ void heapify(int arr[], int n, int i) {
     int r = 3 * i + 1;
 
    
-    if (l < n && arr[l] > arr[i])
+    if (l < n && arr[l] > arr[largest])
         largest = l;
-
+   
     if (m < n && arr[m] > arr[largest])
         largest = m;
 
@@ -51,13 +51,11 @@ void heapify(int arr[], int n, int i) {
 }
 
 void sorting(int arr[], int n) {
-    for (int i = n / 3 - 1; i >= 0; i--)
+    for (int i = n + 1 / 3; i >= 0; i--)
         heapify(arr, n, i);
 
-    
-    for (int i = n - 1; i >= 0; i--) {
+    for (int i = n - 1; i > 0; i--) {
         std::swap(arr[0], arr[i]);
-        n--;
         heapify(arr, i, 0);
     }
 }
