@@ -32,6 +32,8 @@ int main()
 	cout << "Sorted strings:\n";
 	print(s, n);
 	cout << endl;
+
+	delete[] s;
 }
 
 
