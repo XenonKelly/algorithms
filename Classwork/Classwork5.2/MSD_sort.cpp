@@ -40,8 +40,6 @@ int main()
 int char_to_int(string s, int i) {
 	if (i < s.length())
 		return s[i];
-	else
-		return -1;
 }
 
 void MSD_sort(string s[], int start, int end, int j)
@@ -69,11 +67,16 @@ void MSD_sort(string s[], int start, int end, int j)
 	for (int i = start; i <= end; i++)
 		s[i] = temp[i - start];
 
-	for (int i = 0; i < L; i++)
+	for (int i = 0; i < L; i++) {
 		MSD_sort(s, start + count[i], start + count[i + 1] - 1, j + 1);
-
+		
+	}
 	delete[] temp;
+		
+
+	
 }
+
 
 string random_string(size_t length)
 {
